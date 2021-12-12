@@ -106,18 +106,14 @@ module.exports.getAccessToken = async (event) => {
 
 
 module.exports.getCalendarEvents = async (event) => {
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0]
-  );
-  const access_token = decodeURIComponent(
-    `${event.pathParameters.access_token}`
-  );
-  oAuth2Client.setCredentials({
-    access_token,
-  });
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+  oAuth2Client.setCredentials({ access_token });
 
+  /**
+   * This calendar method will get a list of events from the “fullstackwebdev” Google calendar
+   * using oAuth2Client for authentication.
+   */
   return new Promise((resolve, reject) => {
     calendar.events.list(
       {
@@ -125,32 +121,33 @@ module.exports.getCalendarEvents = async (event) => {
         auth: oAuth2Client,
         timeMin: new Date().toISOString(),
         singleEvents: true,
-        orderBy: "startTime",
+        orderBy: 'startTime',
       },
-      (error, response) => {
-        if (error) {
-          reject(error);
+      (err, response) => {
+        if (err) {
+          reject(err);
         } else {
           resolve(response);
         }
       }
     );
-   })
+  })
     .then((results) => {
       return {
         statusCode: 200,
         headers: {
           'Access-Control-Allow-Origin': '*',
         },
-        body: JSON.stringify({
-          events: results.data.items,
-        }),
+        body: JSON.stringify({ events: results.data.items }),
       };
     })
     .catch((err) => {
       console.error(err);
       return {
         statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify(err),
       };
     });
