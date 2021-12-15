@@ -10,7 +10,6 @@ describe('<Event /> component', () => {
     EventWrapper = shallow(<Event event={event} />);
   });
 
-  // Test cases that test basic information
   test('renders summary', () => {
     expect(EventWrapper.find('.summary')).toHaveLength(1);
   });
@@ -31,15 +30,15 @@ describe('<Event /> component', () => {
     expect(EventWrapper.state('collapsed')).toBe(true);
   });
 
-  test('click on a show-details button to expand the event details', () => {
+  test('click on a show-details button to expand', () => {
     EventWrapper.setState({
       collapsed: true,
     });
     EventWrapper.find('.show-details-btn').simulate('click');
     expect(EventWrapper.state('collapsed')).toBe(false);
   });
-  
-  test('click on hide-details button to hide the evet details', () => {
+
+  test('click on hide-details button to hide the event', () => {
     EventWrapper.setState({
       collapsed: false,
     });
