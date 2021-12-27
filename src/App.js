@@ -8,9 +8,11 @@ import { getEvents, extractLocations } from './api';
 // import { mockData } from './mock-data';
 
 class App extends Component {
+
   state = {
     events: [],
     locations: [],
+    currentLocation: 'all',
     numberOfEvents: 32
   }
 
@@ -39,11 +41,17 @@ class App extends Component {
   }
 
   render() {
+    const { numberOfEvents } = this.state;
     return (
       <div className="App">
-        <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
+         <CitySearch 
+          locations={this.state.locations} 
+          updateEvents={this.updateEvents}/>
+        <NumberOfEvents 
+          numberOfEvents={numberOfEvents} 
+          updateEventCount={this.updateEventCount} 
+          errorText={this.state.errorText}/>
         <EventList events={this.state.events} />
-        <NumberOfEvents numberOfEvents={this.state.numberOfEvents} />
       </div>
     );
   }
