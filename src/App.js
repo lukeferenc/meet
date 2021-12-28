@@ -40,6 +40,22 @@ class App extends Component {
     });
   }
 
+  updateEventCount = async (e) => {
+    const newNumber = e.target.value ? parseInt(e.target.value) : 32;
+
+    if (newNumber < 1 || newNumber > 32) {
+      await this.setState({
+        errorText: "Select number between 1 and 32",
+      });
+    } else {
+      await this.setState({
+        errorText: "",
+        numberOfEvents: newNumber,
+      });
+      this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
+    }
+  };
+
   render() {
     const { numberOfEvents } = this.state;
     return (
