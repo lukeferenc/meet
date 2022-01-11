@@ -29,7 +29,7 @@ input[type="number"] {
   padding: 8px 6px 8px 10px;
   border-radius: 4px;
   outline: none;
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   font-size: 14px;
   line-height: 20px;
   align-self: center;
