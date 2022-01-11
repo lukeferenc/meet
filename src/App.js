@@ -16,7 +16,9 @@ class App extends Component {
     errorText: "",
   }
 
-
+  updateNumberOfEvents = (value) => {
+    this.updateEvents(this.state.currentLocation, value)
+  }
 
   updateEvents = (location, eventCount) => {
     getEvents().then((events) => {
@@ -67,6 +69,7 @@ class App extends Component {
           updateEvents={this.updateEvents}/>
         <NumberOfEvents 
           numberOfEvents={numberOfEvents} 
+          updateNumberOfEvents={this.updateNumberOfEvents}
           updateEventCount={this.updateEventCount} 
           errorText={this.state.errorText}/>
         <EventList events={this.state.events} />
